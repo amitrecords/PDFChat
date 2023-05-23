@@ -9,6 +9,7 @@ from flask import Flask, request, Response
 from flask import flash,render_template, request, send_from_directory
 import json
 
+app = Flask(__name__)
 
 os.environ['OPENAI_API_KEY'] = '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'
 
@@ -46,7 +47,7 @@ def query_chat()->Response:
     print(result['answer'])
     return Response(response=resp,status=200, mimetype='application/json')
 
-app = Flask(__name__)
+
 
 @app.route("/")
 def landing_page():
