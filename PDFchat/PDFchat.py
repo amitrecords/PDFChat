@@ -1,4 +1,5 @@
 import os
+import traceback
 from langchain.document_loaders import PyPDFLoader 
 from langchain.embeddings import OpenAIEmbeddings 
 from langchain.vectorstores import Chroma 
@@ -58,7 +59,7 @@ def landing_page():
                                         persist_directory=".")
     vectordb.persist()
     memory = ConversationBufferMemory(memory_key="chat_history", return_messages=True)
-    pdf_qa = ConversationalRetrievalChain.from_llm(OpenAI(temperature=0.9) , vectordb.as_retriever(), memory=memory)
+    pdf_qa = ConversationalRetrievalChain.from_llm(OpenAI(temperature=0.3) , vectordb.as_retriever(), memory=memory)
     app.logger.info("Testing...")
     f = open("PDFchat/test_questions/questions.txt", "r")
     questions=[]
@@ -66,7 +67,11 @@ def landing_page():
         if line[:2]=='Q:':
             questions.append(line[3:])
     for query in questions:
-        result=pdf_qa({"question": query})
+        try:
+            result=pdf_qa({"question": query})
+        except Exception as e:
+            app.logger.error(f'An error occured when attempting to answer query: {query}')
+            app.logger.error(traceback.format_exc())
         answer=result.get('answer')
         print(f"Q: {query} \n Ans: {answer} \n")
     flash('You can direct your queries about the PDF to /pdfchat')
