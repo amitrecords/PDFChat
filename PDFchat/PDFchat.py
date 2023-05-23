@@ -11,11 +11,14 @@ import json
 
 app = Flask(__name__)
 
-os.environ['OPENAI_API_KEY'] = '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'
-
-
-
-
+loader = PyPDFLoader("PDFchat/test_documents/OH HMO EOC (3).pdf")
+pages = loader.load_and_split()
+embeddings = OpenAIEmbeddings()
+vectordb = Chroma.from_documents(pages, embedding=embeddings, 
+                                persist_directory=".")
+vectordb.persist()
+memory = ConversationBufferMemory(memory_key="chat_history", return_messages=True)
+pdf_qa = ConversationalRetrievalChain.from_llm(OpenAI(temperature=0.9) , vectordb.as_retriever(), memory=memory)
 
 
 @app.route("/pdfchat", methods=['POST'])
@@ -27,6 +30,8 @@ def query_chat()->Response:
         except ValueError:
             print('Failed to decode json')
             return Response(response='Sorry. Failed to decode JSON data', status=415, mimetype='text/plain')
+    
+    
     result = pdf_qa({"question": query})
     #query = "How many fundamental rights do citizens have and what are they?"
     resp={}
@@ -44,7 +49,7 @@ def query_chat()->Response:
 def landing_page():
     app.logger.info("Learning...")
     directory="PDFChat/test_documents"
-    embeddings = OpenAIEmbeddings()
+    
     for filename in os.listdir(directory):
         pdf_path = os.path.join(directory, filename)
         loader = PyPDFLoader(pdf_path)
