@@ -72,3 +72,6 @@ def landing_page():
     flash('You can direct your queries about the PDF to /pdfchat')
 
     return render_template('layout.html')
+
+if __name__ == "__main__":
+    app.run(debug=True, host='localhost',port=8000)
