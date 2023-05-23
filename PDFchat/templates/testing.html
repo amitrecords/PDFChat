@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+<div class="container">
+    {% block content%}
+    <br>
+    <!--<style type="text/css">
+    #myimage { float: left; }
+    </style>-->
+    <br>
+    <h3> Testing Dashboard</h3>
+    {% if error %}
+        <p class=error><strong>Error:</strong> {{ error }}
+    {% endif %}
+    <form action="http://ddc1-caselaw-pagesegmentation.content.aws.lexis.com/dashboard" method="POST" enctype="multipart/form-data">
+        <input type="file" name="image" />
+        <input type="submit" value="Extract"/>
+    </form>
+    <br>
+    <br>
+    <br>
+    {% if filename %}
+    <div>
+        <iframe src="{{ url_for('display_image', filename=filename) }}" id='myimage' width="700px" height="900px"></iframe>
+    </div>
+    {% endif %}
+    <br>
+    {% if text %}
+    <div class="NERoutput">
+        {{text|safe}}
+    </div>
+    {% endif %}
+    <br>
+    {% endblock content%}
+</div>

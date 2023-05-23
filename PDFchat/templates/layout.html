@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/cyborg/bootstrap.min.css" integrity="sha384-nEnU7Ae+3lD52AK+RGNzgieBWMnEfgTbRHIwEvp1XXPdqdO6uLTd/NwXbzboqjc2" crossorigin="anonymous"> -->
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+    <title> PDFChat Endpoint </title>
+    </head>
+    
+</head>
+
+<body>
+    <header class="site-header">
+        <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
+            <a class="navbar-brand mr-4" href="/">Page Segmentation</a>
+        </nav>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div>
+                </div>
+            </div>
+<!--            <div class="container">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle"
+                    aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarToggle">
+                    <ul class="nav nav-tabs">
+                        <li class="nav-item">
+                            <a class="nav-link active" role="tab" id="DataLake-tab" href="#DataLake">DataLake</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" role="tab" id="Training-tab" href="#Training">Training</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" role="tab" id="Testing-tab" href="#Testing">Testing</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" role="tab" id="Shipping-tab" href="#Shipping">Shipping</a>
+                        </li>
+                    </ul>
+                </div>
+            </div> -->
+        </nav>
+    </header>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul class=flashes>
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+    <main role="main" class="container">
+       {% block content %}{% endblock %}
+    </main>
+<!--            <div class="col-md-4">
+                <div class="content-section">
+                    <h3>Dummy Sidebar</h3>
+                    <p>
+                        <button type="button" class="btn btn-primary"><strong><span>&#43;</span> Add
+                                Project</strong></button>
+                    </p>
+                    <p class='text-muted'>You can put any information here you'd like.
+                        <ul class="list-group">
+                            <li class="list-group-item list-group-item-light">Dummy</li>
+                            <li class="list-group-item list-group-item-light">Dummy</li>
+                            <li class="list-group-item list-group-item-light">Dummy</li>
+                            <li class="list-group-item list-group-item-light">Dummy</li>
+                        </ul>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </main>  -->
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>
