@@ -14,17 +14,8 @@ app = Flask(__name__)
 os.environ['OPENAI_API_KEY'] = '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'
 
 
-pdf_path = "./PDFchat/test_documents/indian_constitution.pdf"
-loader = PyPDFLoader(pdf_path)
-pages = loader.load_and_split()
 
-embeddings = OpenAIEmbeddings()
 
-vectordb = Chroma.from_documents(pages, embedding=embeddings, 
-                                 persist_directory=".")
-vectordb.persist()
-memory = ConversationBufferMemory(memory_key="chat_history", return_messages=True)
-pdf_qa = ConversationalRetrievalChain.from_llm(OpenAI(temperature=0.9) , vectordb.as_retriever(), memory=memory)
 
 
 @app.route("/pdfchat", methods=['POST'])
@@ -51,6 +42,28 @@ def query_chat()->Response:
 
 @app.route("/")
 def landing_page():
+    app.logger.info("Learning...")
+    directory="PDFChat/test_documents"
+    embeddings = OpenAIEmbeddings()
+    for filename in os.listdir(directory):
+        pdf_path = os.path.join(directory, filename)
+        loader = PyPDFLoader(pdf_path)
+        pages = loader.load_and_split()
+        vectordb = Chroma.from_documents(pages, embedding=embeddings, 
+                                        persist_directory=".")
+    vectordb.persist()
+    memory = ConversationBufferMemory(memory_key="chat_history", return_messages=True)
+    pdf_qa = ConversationalRetrievalChain.from_llm(OpenAI(temperature=0.9) , vectordb.as_retriever(), memory=memory)
+    app.logger.info("Testing...")
+    f = open("PDFchat/test_questions/questions.txt", "r")
+    questions=[]
+    for line in f:
+        if line[:2]=='Q:':
+            questions.append(line[3:])
+    for query in questions:
+        result=pdf_qa({"question": query})
+        answer=result.get('answer')
+        print(f"Q: {query} \n Ans: {answer} \n")
     flash('You can direct your queries about the PDF to /pdfchat')
 
     return render_template('layout.html')
