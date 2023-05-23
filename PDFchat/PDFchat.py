@@ -37,4 +37,6 @@ app = Flask(__name__)
 
 @app.route("/")
 def hello_world():
+    question="How many fundamental rights do citizens have and what are they?"
+    query_chat(question)
     return "<p>Hello, World!</p>"
