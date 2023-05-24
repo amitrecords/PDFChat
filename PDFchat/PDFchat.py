@@ -15,7 +15,7 @@ app = Flask(__name__)
 loader = PyPDFLoader("PDFchat/test_documents/OH HMO EOC (3).pdf")
 pages = loader.load_and_split()
 embeddings = OpenAIEmbeddings()
-vectordb = Chroma.from_documents(pages, embedding=embeddings, 
+vectordb = Chroma.from_documents(pages[9:], embedding=embeddings, 
                                 persist_directory=".")
 vectordb.persist()
 memory = ConversationBufferMemory(memory_key="chat_history", return_messages=True)
@@ -55,7 +55,7 @@ def landing_page():
         pdf_path = os.path.join(directory, filename)
         loader = PyPDFLoader(pdf_path)
         pages = loader.load_and_split()
-        vectordb = Chroma.from_documents(pages, embedding=embeddings, 
+        vectordb = Chroma.from_documents(pages[9:], embedding=embeddings, 
                                         persist_directory=".")
     vectordb.persist()
     memory = ConversationBufferMemory(memory_key="chat_history", return_messages=True)
