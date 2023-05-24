@@ -3,3 +3,4 @@ index/*
 chroma-collections.parquet
 chroma-embeddings.parquet
 */__pycache__/*
+**.DS_Store
