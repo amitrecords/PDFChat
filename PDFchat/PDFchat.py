@@ -66,7 +66,6 @@ def landing_page():
     for line in f:
         if line[:2]=='Q:':
             questions.append(line[3:])
-    print(questions)
     for i,query in enumerate(questions):
         try:
             result=pdf_qa({"question": query})
