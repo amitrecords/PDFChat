@@ -19,7 +19,7 @@ vectordb = Chroma.from_documents(pages, embedding=embeddings,
                                 persist_directory=".")
 vectordb.persist()
 memory = ConversationBufferMemory(memory_key="chat_history", return_messages=True)
-pdf_qa = ConversationalRetrievalChain.from_llm(OpenAI(temperature=0.9) , vectordb.as_retriever(), memory=memory)
+pdf_qa = ConversationalRetrievalChain.from_llm(OpenAI(temperature=0.5) , vectordb.as_retriever(), memory=memory)
 
 
 @app.route("/pdfchat", methods=['POST'])
@@ -59,7 +59,7 @@ def landing_page():
                                         persist_directory=".")
     vectordb.persist()
     memory = ConversationBufferMemory(memory_key="chat_history", return_messages=True)
-    pdf_qa = ConversationalRetrievalChain.from_llm(OpenAI(temperature=0.9) , vectordb.as_retriever(), memory=memory)
+    pdf_qa = ConversationalRetrievalChain.from_llm(OpenAI(temperature=0.5) , vectordb.as_retriever(), memory=memory)
     app.logger.info("Testing...")
     f = open("PDFchat/test_questions/questions.txt", "r")
     questions=[]
