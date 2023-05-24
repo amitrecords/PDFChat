@@ -66,14 +66,13 @@ def landing_page():
     for line in f:
         if line[:2]=='Q:':
             questions.append(line[3:])
+    print(questions)
     for i,query in enumerate(questions):
-        memory = ConversationBufferMemory(memory_key=f"chat_history_{str(i)}", return_messages=True)
-        pdf_qa = ConversationalRetrievalChain.from_llm(OpenAI(temperature=0.3) , vectordb.as_retriever(), memory=memory)
         try:
             result=pdf_qa({"question": query})
         except Exception as e:
             app.logger.error(f'An error occured when attempting to answer query: {query}')
-            result=pdf_qa({"question": query})
+            #result=pdf_qa({"question": query})
             #app.logger.error(traceback.format_exc())
         answer=result.get('answer')
         print(f"Q: {query} \n Ans: {answer} \n")
